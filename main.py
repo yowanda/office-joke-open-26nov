@@ -17,6 +17,14 @@ def main() -> None:
     with open(path, "w", encoding="utf-8", newline="") as f:
         f.write(JOKE)
 
+    # Runtime validation: re-read what we wrote and assert it is exactly
+    # one line, 1-200 characters, byte-identical to the joke.
+    with open(path, "r", encoding="utf-8", newline="") as f:
+        written = f.read()
+    assert written == JOKE, "entry.txt content mismatch"
+    assert "\n" not in written, "entry must be a single line"
+    assert 1 <= len(written) <= 200, "entry must be 1-200 characters"
+
 
 if __name__ == "__main__":
     main()
